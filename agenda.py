@@ -13,16 +13,25 @@ AGENDA['giovanna'] = {
 }
 
 def mostrar_contatos():
-    for contato in AGENDA:
-        buscar_contato(contato)
+    if AGENDA:
+        for contato in AGENDA:
+            buscar_contato(contato)
+    else:
+        print('\n Agenda vazia...')
 
 
 def buscar_contato(contato):
-    print()
-    print('Nome:', contato)
-    print('Telefone:', AGENDA[contato]['telefone'])
-    print('E-mail:', AGENDA[contato]['email'])
-    print('Endereço:', AGENDA[contato]['endereco'])
+    try:
+        print()
+        print('Nome:', contato)
+        print('Telefone:', AGENDA[contato]['telefone'])
+        print('E-mail:', AGENDA[contato]['email'])
+        print('Endereço:', AGENDA[contato]['endereco'])
+    except KeyError:
+        print('\nContato inexistente...')
+    except Exception as error:
+        print('Um erro inesperado ocorreu.')
+        print(error)
 
 
 def incluir_editar_contato(contato, telefone, email, endereco):
@@ -31,12 +40,19 @@ def incluir_editar_contato(contato, telefone, email, endereco):
         'email': email,
         'endereco': endereco,
     }
-    print('Contato "{}" adicionado/editado com sucesso!'.format(contato))
+    print('\nContato "{}" adicionado/editado com sucesso!'.format(contato))
 
 
 def excluir_contato(contato):
-    AGENDA.pop(contato)
-    print('Contato "{}" excluído com sucesso!'.format(contato))
+    try:
+        AGENDA.pop(contato)
+        print('\nContato "{}" excluído com sucesso!'.format(contato))
+    except KeyError:
+        print('\nContato inexistente...')
+    except Exception as error:
+        print('Um erro inesperado ocorreu.')
+        print(error)
+
 
 def imprimir_menu():
     print()
@@ -46,7 +62,6 @@ def imprimir_menu():
     print('4 - Editar contato')
     print('5 - Excluir contato')
     print('0 - Fechar agenda')
-
 
 
 while True:
