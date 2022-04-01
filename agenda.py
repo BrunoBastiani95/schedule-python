@@ -34,7 +34,11 @@ def buscar_contato(contato):
         print(error)
 
 
-def incluir_editar_contato(contato, telefone, email, endereco):
+def incluir_editar_contato(contato):
+    telefone = input('Digite o telefone do contato: ')
+    email = input('Digite o e-mail do contato: ')
+    endereco = input('Digite o endereco do contato: ')
+
     AGENDA[contato] = {
         'telefone': telefone,
         'email': email,
@@ -66,28 +70,42 @@ def imprimir_menu():
 
 while True:
     imprimir_menu()
-
     opcao = input('\nEscolha uma opção: ')
 
     if opcao == '1':
         mostrar_contatos()
+
     elif opcao == '2':
         contato = input('Digite o nome do contato: ')
         buscar_contato(contato)
-    elif opcao == '3' or opcao == '4':
+
+    elif opcao == '3':
         contato = input('Digite o nome do contato: ')
-        telefone = input('Digite o telefone do contato: ')
-        email = input('Digite o e-mail do contato: ')
-        endereco = input('Digite o endereco do contato: ')
-        incluir_editar_contato(contato, telefone, email, endereco)
-        mostrar_contatos()
+
+        try:
+            AGENDA[contato]
+            print('\n Contato já existe!')
+        except KeyError:
+            incluir_editar_contato(contato)
+
+    elif opcao == '4':
+        contato = input('Digite o nome do contato: ')
+
+        try:
+            AGENDA[contato]
+            print('\n Editando contato: ', contato)
+            incluir_editar_contato(contato)
+        except KeyError:
+            print('\nConta inexistente...')
+
     elif opcao == '5':
         contato = input('Digite o nome do contato: ')
         excluir_contato(contato)
-        mostrar_contatos()
+
     elif opcao == '0':
         print('Fechando o programa... Adeus!')
         break
+
     else:
         print('\nOpção inválida! Tente novamente...')
 
