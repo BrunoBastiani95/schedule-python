@@ -30,7 +30,7 @@ def buscar_contato(contato):
     except KeyError:
         print('\nContato inexistente...')
     except Exception as error:
-        print('Um erro inesperado ocorreu.')
+        print('\nUm erro inesperado ocorreu.')
         print(error)
 
 
@@ -54,8 +54,22 @@ def excluir_contato(contato):
     except KeyError:
         print('\nContato inexistente...')
     except Exception as error:
-        print('Um erro inesperado ocorreu.')
+        print('\nUm erro inesperado ocorreu.')
         print(error)
+
+
+def exportar_contatos():
+    try:
+        with open('contatos.txt', 'w') as arquivo:
+            for contato in AGENDA:
+                telefone = AGENDA[contato]['telefone']
+                email = AGENDA[contato]['email']
+                endereco = AGENDA[contato]['endereco']
+                arquivo.write('Nome: {}\n Telefone: {}\n E-mail: {}\n Endereco:{}\n\n'.format(contato, telefone, email, endereco))
+
+        print('\nAgenda exportada com sucesso!')
+    except:
+        print('\nHouve um erro durante a exportação dos contatos.')
 
 
 def imprimir_menu():
@@ -65,6 +79,7 @@ def imprimir_menu():
     print('3 - Inserir contato')
     print('4 - Editar contato')
     print('5 - Excluir contato')
+    print('6 - Exportar contatos para CSV')
     print('0 - Fechar agenda')
 
 
@@ -76,15 +91,15 @@ while True:
         mostrar_contatos()
 
     elif opcao == '2':
-        contato = input('Digite o nome do contato: ')
+        contato = input('\nDigite o nome do contato: ')
         buscar_contato(contato)
 
     elif opcao == '3':
-        contato = input('Digite o nome do contato: ')
+        contato = input('\nDigite o nome do contato: ')
 
         try:
             AGENDA[contato]
-            print('\n Contato já existe!')
+            print('\nContato já existe!')
         except KeyError:
             incluir_editar_contato(contato)
 
@@ -93,17 +108,20 @@ while True:
 
         try:
             AGENDA[contato]
-            print('\n Editando contato: ', contato)
+            print('\nEditando contato: ', contato)
             incluir_editar_contato(contato)
         except KeyError:
             print('\nConta inexistente...')
 
     elif opcao == '5':
-        contato = input('Digite o nome do contato: ')
+        contato = input('\nDigite o nome do contato: ')
         excluir_contato(contato)
 
+    elif opcao == '6':
+        exportar_contatos()
+
     elif opcao == '0':
-        print('Fechando o programa... Adeus!')
+        print('\nFechando o programa... Adeus!')
         break
 
     else:
